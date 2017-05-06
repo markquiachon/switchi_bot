@@ -17,6 +17,9 @@ def hello_world():
 
 @route('/slack', method='POST')
 def slack_handler():
+  post_to = "https://script.google.com/macros/s/AKfycbz4AP5Xna4QStGbcX8eCC_9nryW03NJuA3qurLdo8J2uotvZ5c/exec"
+  r = requests.post(post_to, json={"text":"From Bottle"})
+
   from slackclient import SlackClient
   SLACK_API_TOKEN = "xoxb-176165584416-sn3eHS3cUb2l1gNSPh3CoHGy"
   sc = SlackClient(SLACK_API_TOKEN)
