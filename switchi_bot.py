@@ -1,9 +1,18 @@
-from bottle import default_app, route, template
+from bottle import default_app, route, template 
 import requests
 
 @route('/')
 def hello_world():
   return "Hello from Chive!"
+
+@route('/slack', method='POST')
+def slack_handler():
+  from bottle import request, response
+  from json import dumps
+  json_text = request.json
+  token = {"token":json_text["token"]}
+  response.content_type = "application/json"
+  return dumps(token)
 
 @route('/spread')
 def log_spreadsheet():
