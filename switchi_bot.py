@@ -23,7 +23,7 @@ def slack_handler():
   from slackclient import SlackClient
   SLACK_API_TOKEN = "xoxb-176165584416-sn3eHS3cUb2l1gNSPh3CoHGy"
   sc = SlackClient(SLACK_API_TOKEN)
-  sc.api_call("chat.postMessage", channel="#channel4bots", text="Hello from bottle")
+  #sc.api_call("chat.postMessage", channel="#channel4bots", text="Hello from bottle")
   
 @route('/spread')
 def log_spreadsheet():
