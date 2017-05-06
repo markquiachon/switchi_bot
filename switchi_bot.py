@@ -9,7 +9,7 @@ def hello_world():
 def log_spreadsheet():
   post_to = "https://script.google.com/macros/s/AKfycbz4AP5Xna4QStGbcX8eCC_9nryW03NJuA3qurLdo8J2uotvZ5c/exec"
   r = requests.post(post_to, data={"test":"From Bottle"})
-  return "Trying post"
+  return r.status_code 
 
 @route('/hello/<name>')
 def index(name):
