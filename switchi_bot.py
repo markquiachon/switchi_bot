@@ -10,7 +10,7 @@ def slack_handler():
   from bottle import request, response
   from json import dumps
   json_text = request.json
-  token = {"token":json_text["token"]}
+  token = {"challenge":json_text["challenge"]}
   response.content_type = "application/json"
   return dumps(token)
 
