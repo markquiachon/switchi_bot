@@ -8,7 +8,7 @@ def hello_world():
 @route('/spread')
 def log_spreadsheet():
   post_to = "https://script.google.com/macros/s/AKfycbz4AP5Xna4QStGbcX8eCC_9nryW03NJuA3qurLdo8J2uotvZ5c/exec"
-  r = requests.post(post_to, json={"test":"From Bottle"})
+  r = requests.post(post_to, json={"text":"From Bottle"})
   return "posting to spreadsheet"
 
 @route('/hello/<name>')
