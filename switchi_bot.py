@@ -1,4 +1,4 @@
-from bottle import default_app, route 
+from bottle import default_app, route, template
 
 @route('/')
 def hello_world():
