@@ -1,7 +1,11 @@
-from bottle import route, run, template
+from bottle import default_app, route 
+
+@route('/')
+def hello_world():
+  return "Hello from Chive!"
 
 @route('/hello/<name>')
 def index(name):
     return template('<b>Hello {{name}}</b>!', name=name)
 
-run(host='0.0.0.0', port=8080)
+application = default_app()
