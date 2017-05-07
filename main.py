@@ -53,10 +53,12 @@ def return_verification():
 
 
 @route('/auth_app')
-def auth_app(req=None):
-  #code = request.args.get('code')
+def auth_app():
+  from bottle import request
+  auth_dict = request.query.decode()
+  code = auth_dict['code']
 
-  #switchi_bot.authenticate(code)
+  switchi_bot.authenticate(code)
   return "Switchi bot installed."
 
 
