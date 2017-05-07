@@ -1,4 +1,4 @@
-from bottle import default_app, route, template 
+from bottle import request, default_app, route, template 
 import slack_bot
 import requests
 import os
@@ -54,9 +54,7 @@ def return_verification():
 
 @route('/auth_app')
 def auth_app():
-  from bottle import request
-  auth_dict = request.query.decode()
-  code = auth_dict['code']
+  code = request.GET.get("code") 
 
   switchi_bot.authenticate(code)
   print >> sys.stderr, "Verifying....."
@@ -65,7 +63,6 @@ def auth_app():
 
 @route('/slack2', method='POST')
 def slack_handler():
-  from bottle import request
 
   event_json = request.json
   
