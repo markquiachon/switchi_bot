@@ -19,7 +19,7 @@ class SlackBot(object):
 
   def authenticate(self, code):
     auth_response = self.client.api_call(
-                         "oath.access",
+                         "oauth.access",
                          client_id=self.oauth["client_id"],
                          client_secret=self.oauth["client_secret"],
                          code=code)
