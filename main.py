@@ -53,7 +53,7 @@ def return_verification():
 
 
 @route('/auth_app')
-def auth_app() 
+def auth_app():
   code = request.args.get('code')
 
   switchi_bot.authenticate(code)
