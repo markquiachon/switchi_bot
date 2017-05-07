@@ -39,6 +39,7 @@ def event_handler(event_type, event_json):
     status_code = log_spreadsheet(spreadsheet_url, message) 
 
     if status_code == requests.codes.ok:
+      print >> sys.stderr, "status code section"
       switchi_bot.post_channel_message(message, channel_id, user_id)
 
 @route('/test')
