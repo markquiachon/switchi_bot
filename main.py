@@ -52,8 +52,8 @@ def return_verification():
   return dumps(rv)
 
 
-@route('/auth_app')
-def auth_app():
+@route('/auth_app', method=['GET', 'POST'])
+def auth_app(req=None):
   code = request.args.get('code')
 
   switchi_bot.authenticate(code)
