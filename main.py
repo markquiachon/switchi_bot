@@ -42,6 +42,7 @@ def event_handler(event_type, event_json):
       print >> sys.stderr, "status code section"
       switchi_bot.post_channel_message(message, channel_id, user_id)
 
+
 @route('/test')
 def return_verification():
   from bottle import response
@@ -49,6 +50,15 @@ def return_verification():
   response.content_type = 'application/json'
   rv = {"token":os.environ.get("VERIFICATION_TOKEN")}
   return dumps(rv)
+
+
+@route('/auth_app')
+def auth_app() 
+  code = request.args.get('code')
+
+  switchi_bot.authenticate(code)
+  return "Switchi bot installed."
+
 
 @route('/slack2', method='POST')
 def slack_handler():
@@ -66,7 +76,6 @@ def slack_handler():
 
     # Handle events from Slack 
     if "event" in event_json:
-      print >> sys.stderr, "entering event"
       event = event_json["event"]["type"]
       return event_handler(event, event_json)
    
