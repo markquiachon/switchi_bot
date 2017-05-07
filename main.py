@@ -41,6 +41,13 @@ def event_handler(event_type, event_json):
     if status_code == requests.codes.ok:
       switchi_bot.post_channel_message(message, channel_id, user_id)
 
+@route('/test')
+def return_verification():
+  from bottle import response
+  from json import dumps
+  response.content_type = 'application/json'
+  rv = {"token":os.environ.get("VERIFICATION_TOKEN")}
+  return dumps(rv)
 
 @route('/slack2', method='POST')
 def slack_handler():
@@ -53,11 +60,8 @@ def slack_handler():
   #  return verify_challenge(event_json)
 
 
-  print >> sys.stderr, "Entering token verification"
-
   # Token Verification
   if switchi_bot.verification == event_json.get("token"):
-    print >> sys.stderr, "Verifying if token is equal"
     # URL Verification
     if "challenge" in event_json:
       from bottle import response
