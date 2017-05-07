@@ -59,6 +59,7 @@ def auth_app():
   code = auth_dict['code']
 
   switchi_bot.authenticate(code)
+  print >> sys.stderr, "Verifying....."
   return "Switchi bot installed."
 
 
