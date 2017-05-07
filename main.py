@@ -47,6 +47,11 @@ def slack_handler():
   from bottle import request
 
   event_json = request.json
+  if "challenge" in event_json:
+    from bottle import response
+    response.content_type = 'application/json'
+    return verify_challenge(event_json)
+
 
   print >> sys.stderr, "Entering token verification"
 
