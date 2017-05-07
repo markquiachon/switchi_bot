@@ -2,6 +2,7 @@ from bottle import default_app, route, template
 import slack_bot
 import requests
 import os
+import sys
 
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
@@ -47,8 +48,11 @@ def slack_handler():
 
   event_json = request.json
 
+  print >> sys.stderr, "Entering token verification"
+
   # Token Verification
   if switchi_bot.verification == event_json.get("token"):
+    print >> sys.stderr, "Verifying if token is equal"
     # URL Verification
     if "challenge" in event_json:
       from bottle import response
