@@ -40,14 +40,14 @@ def event_handler(event_type, event_json):
 
     if status_code == requests.codes.ok:
       print >> sys.stderr, "status code section"
-      switchi_bot.post_channel_message(message, channel_id, user_id)
+      #switchi_bot.post_channel_message(message, channel_id, user_id)
 
 
 @route('/auth_app')
 def auth_app():
   code = request.GET.get("code")
-  switchi_bot.authenticate(code)
-  return code 
+  test = switchi_bot.authenticate(code)
+  return test 
 
 
 @route('/slack2', method='POST')

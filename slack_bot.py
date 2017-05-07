@@ -22,7 +22,8 @@ class SlackBot(object):
                          client_secret=self.oauth["client_secret"],
                          code=code)
 
-    self.client = SlackClient(auth_response["access_token"])
+    self.client = SlackClient(auth_response["bot"]["bot_access_token"])
+    return auth_response
 
   def post_channel_message(self, message, channel_id, user_id):
     post_message = self.client.api_call("chat.postMessage",
