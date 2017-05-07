@@ -65,6 +65,7 @@ def slack_handler():
 
     # Handle events from Slack 
     if "event" in event_json:
+      print >> sys.stderr, "entering event"
       event = event_json["event"]["type"]
       return event_handler(event, event_json)
    
