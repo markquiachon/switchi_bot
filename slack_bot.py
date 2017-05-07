@@ -7,7 +7,7 @@ authed_teams = {}
 
 class SlackBot(object):
   def __init__(self, bot_name, client_id, client_secret, verification):
-    super(Bot, self).__init__()
+    super(SlackBot, self).__init__()
     self.name = bot_name
     self.oauth = {"client_id": client_id,
                   "client_secret": client_secret,
