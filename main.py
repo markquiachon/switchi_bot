@@ -15,11 +15,9 @@ switchi_bot = slack_bot.SlackBot(BOT_NAME,
 
 
 def verify_challenge(event_json):
-  from bottle import response
   from json import dumps
 
   token = {"challenge":event_json["challenge"]}
-  response.content_type = "application/json"
 
   return dumps(token)
 
@@ -53,6 +51,8 @@ def slack_handler():
   if switchi_bot.verification == event_json.get("token"):
     # URL Verification
     if "challenge" in event_json:
+      from bottle import response
+      response.content_type = 'application/json'
       return verify_challenge(event_json)
 
     # Handle events from Slack 
