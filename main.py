@@ -62,12 +62,8 @@ def event_handler(event_type, event_json):
       input = event_json["event"].get("text").split(":")[1]
       client = wolframalpha.Client(WOLFRAM_APP_ID) 
       response = client.query(input)
-      bot_response = "@%s\n```" % user_name
-      for pod in response.pods:
-        bot_response = bot_response + pod + "\n"
-        #for sub in pod.subpods:
-        #  bot_response = bot_response + sub.text + "\n"
-      bot_response = bot_response + "```"
+      answer = next(response.results).text
+      bot_response = "@%s\n```The answer is: \n%s```" % (user_name, answer)
       
       switchi_bot.post_channel_message(bot_response, channel_id, user_id) 
 
