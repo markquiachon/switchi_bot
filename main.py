@@ -44,12 +44,12 @@ def event_handler(event_type, event_json):
       get_url = spreadsheet_url + "?cmd=%s&state=%s" % (command, "help")
       response = requests.get(get_url).json
 
-      bot_response = "```"
-      for cmd, desc in response.items():
-        bot_response = bot_response + "%s -> %s\n" % (cmd, desc)
-      bot_response = bot_response + "```"
+#      bot_response = "```"
+#      for cmd, desc in response.items():
+#        bot_response = bot_response + "%s -> %s\n" % (cmd, desc)
+#      bot_response = bot_response + "```"
 
-      switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+      switchi_bot.post_channel_message(response, channel_id, user_id)
 
 #    status_code = log_spreadsheet(spreadsheet_url, message) 
 
