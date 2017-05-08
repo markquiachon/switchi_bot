@@ -54,7 +54,7 @@ def event_handler(event_type, event_json):
       bot_response = "@" + user_name + "\nMessage logged. Thanks! :smile:"
       message = event_json["event"].get("text").split(":")[1]
       message = message.strip()
-      status_code = log_spreadsheet(spreadsheet_url, message)
+      status_code = log_spreadsheet(SPREADSHEET_URL, message)
       
       if status_code == requests.codes.ok:
         switchi_bot.post_channel_message(bot_response, channel_id, user_id)
@@ -64,8 +64,9 @@ def event_handler(event_type, event_json):
       response = client.query(input)
       bot_response = "@%s\n```" % user_name
       for pod in response.pods:
-        for sub in pod.subpods:
-          bot_response = bot_response + sub.text + "\n"
+        bot_response = bot_response + pod + "\n"
+        #for sub in pod.subpods:
+        #  bot_response = bot_response + sub.text + "\n"
       bot_response = bot_response + "```"
       
       switchi_bot.post_channel_message(bot_response, channel_id, user_id) 
