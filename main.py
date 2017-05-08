@@ -49,12 +49,14 @@ def event_handler(event_type, event_json):
 def get_user_id():
   test_client = SlackClient("xoxb-176165584416-sn3eHS3cUb2l1gNSPh3CoHGy")
   api_call = test_client.api_call("users.list")
+  id = "None"
   if api_call.get('ok'):
     # retrieve all users so we can find our bot 
     users = api_call.get('members')
     for user in users:
       if 'name' in user and user.get('name') == "switchi":
-        return user.get('id')
+        id = user.get('id')
+  return id
   
 @route('/auth_app')
 def auth_app():
