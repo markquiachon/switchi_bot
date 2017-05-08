@@ -1,6 +1,6 @@
 from bottle import request, default_app, route, template 
 from slackclient import SlackClient
-from json import dumps, loads, JSONDecoder
+from json import dumps, loads
 
 import slack_bot
 import requests
@@ -41,7 +41,7 @@ def event_handler(event_type, event_json):
     if command == "help":
       get_url = spreadsheet_url + "?cmd=%s&state=%s" % (command, "help")
       response = requests.get(get_url)
-      response = JSONDecoder(response.json)
+      response = response.json() 
 
       bot_response = "```"
       for cmd in response:
@@ -49,11 +49,13 @@ def event_handler(event_type, event_json):
       bot_response = bot_response + "```"
 
       switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+    elif command == "log":
+      message = event_json["event"].get("text").split(":")[1]
+      status_code = log_spreadsheet(spreadsheet_url, message)
+      
+      if status_code == requests.codes.ok:
+        switchi_bot.post_channel_message(message, channel_id, user_id)
 
-#    status_code = log_spreadsheet(spreadsheet_url, message) 
-
-#    if status_code == requests.codes.ok:
-#      switchi_bot.post_channel_message(message, channel_id, user_id)
 
 
 @route('/auth_app')
