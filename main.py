@@ -1,6 +1,6 @@
 from bottle import request, default_app, route, template 
 from slackclient import SlackClient
-from json import dumps
+from json import dumps, loads
 
 import slack_bot
 import requests
@@ -40,14 +40,15 @@ def event_handler(event_type, event_json):
     spreadsheet_url = os.environ.get("SPREADSHEET_URL")
     if command == "help":
       get_url = spreadsheet_url + "?cmd=%s&state=%s" % (command, "help")
-      response = requests.get(get_url).json
+      response = requests.get(get_url)
+      test = loads(response.text)
 
 #      bot_response = "```"
 #      for cmd, desc in response.items():
 #        bot_response = bot_response + "%s -> %s\n" % (cmd, desc)
 #      bot_response = bot_response + "```"
 
-      switchi_bot.post_channel_message(dumps(response), channel_id, user_id)
+      switchi_bot.post_channel_message(test, channel_id, user_id)
 
 #    status_code = log_spreadsheet(spreadsheet_url, message) 
 
