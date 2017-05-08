@@ -31,4 +31,7 @@ class SlackBot(object):
                                         username=self.name,
                                         text=message,
                                         as_user=True)
-
+  def get_user_name(self, user_id):
+    res = self.client.api_call("users.info", user=user_id)
+    return res["user"]["name"]
+    

@@ -48,7 +48,8 @@ def event_handler(event_type, event_json):
 
       switchi_bot.post_channel_message(bot_response, channel_id, user_id)
     elif command == "log":
-      bot_response = "@" + user_id + "\nMessage logged. Thanks! :smile:"
+      user_name = switchi_bot.get_user_name(user_id)
+      bot_response = "@" + user_name + "\nMessage logged. Thanks! :smile:"
       message = event_json["event"].get("text").split(":")[1]
       status_code = log_spreadsheet(spreadsheet_url, message)
       
