@@ -34,30 +34,27 @@ def log_spreadsheet(url, text):
 def event_handler(event_type, event_json):
   if event_type == "message": 
     user_id = event_json["event"].get("user")
-    message = event_json["event"].get("text")
     channel_id = event_json["event"].get("channel")
+    command, message = event_json["event"].get("text").split(':')
 
     spreadsheet_url = os.environ.get("SPREADSHEET_URL")
-    status_code = log_spreadsheet(spreadsheet_url, message) 
+    if command == "help":
+      get_url = spreadsheet_url + "?cmd=%s&state=%s" % (command, "help")
+      response = requests.get(get_url)
 
-    if status_code == requests.codes.ok:
-      print >> sys.stderr, "status code section"
+      bot_response = "```"
+      for cmd, desc in response.iteritems():
+        bot_response = bot_response + "%s -> %s\n" % (cmd, desc)
+      bot_response = bot_response + "```"
+
+      switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+
+    #status_code = log_spreadsheet(spreadsheet_url, message) 
+
+    #if status_code == requests.codes.ok:
       #switchi_bot.post_channel_message(message, channel_id, user_id)
 
 
-@route('/test')
-def get_user_id():
-  test_client = SlackClient("xoxb-176165584416-mGMi8IxiwhFUHBwP7HvJ7KdV")
-  api_call = test_client.api_call("users.list")
-  id = "None"
-  if api_call.get('ok'):
-    # retrieve all users so we can find our bot 
-    users = api_call.get('members')
-    for user in users:
-      if 'name' in user and user.get('name') == "switchi":
-        id = user.get('id')
-  return id
-  
 @route('/auth_app')
 def auth_app():
   code = request.GET.get("code")
