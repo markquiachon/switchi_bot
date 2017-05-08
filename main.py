@@ -44,7 +44,7 @@ def event_handler(event_type, event_json):
       response = response.json
 
       bot_response = "```"
-      for cmd, desc in response.items():
+      for cmd, desc in response.iteritems():
         bot_response = bot_response + "%s -> %s\n" % (cmd, desc)
       bot_response = bot_response + "```"
 
