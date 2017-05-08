@@ -39,7 +39,7 @@ def event_handler(event_type, event_json):
     command = event_json["event"].get("text").split(':')[0]
     user_name = switchi_bot.get_user_name(user_id)
     switchi_bot.has_replied = False
-
+    print >> sys.stderr, "Message has been received"
     if command == "help":
       get_url = SPREADSHEET_URL + "?cmd=%s&state=%s" % (command, "help")
       response = requests.get(get_url)
