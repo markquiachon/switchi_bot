@@ -43,12 +43,12 @@ def event_handler(event_type, event_json):
       response = requests.get(get_url)
       response = response.json
 
-      bot_response = "```"
-      for cmd in response:
-        bot_response = bot_response + "%s -> %s\n" % (cmd, response[cmd])
-      bot_response = bot_response + "```"
+      #bot_response = "```"
+      #for cmd in response:
+      #  bot_response = bot_response + "%s -> %s\n" % (cmd, response[cmd])
+      #bot_response = bot_response + "```"
 
-      switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+      switchi_bot.post_channel_message(response, channel_id, user_id)
 
 #    status_code = log_spreadsheet(spreadsheet_url, message) 
 
