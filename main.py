@@ -41,7 +41,7 @@ def event_handler(event_type, event_json):
     spreadsheet_url = os.environ.get("SPREADSHEET_URL")
     if command == "help":
       get_url = spreadsheet_url + "?cmd=%s&state=%s" % (command, "help")
-      response = requests.get(get_url)
+      response = requests.get(get_url).json
 
       bot_response = "```"
       for cmd, desc in response.iteritems():
