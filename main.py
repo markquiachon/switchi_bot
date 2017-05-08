@@ -53,7 +53,7 @@ def get_user_id():
     # retrieve all users so we can find our bot 
     users = api_call.get('members')
     for user in users:
-      if 'name' in user and user.get('name') == BOT_NAME:
+      if 'name' in user and user.get('name') == "switchi":
         return user.get('id')
   
 @route('/auth_app')
