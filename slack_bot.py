@@ -29,5 +29,6 @@ class SlackBot(object):
     post_message = self.client.api_call("chat.postMessage",
                                         channel=channel_id,
                                         username=self.name,
-                                        text=message)
+                                        text=message,
+                                        as_user=True)
 
