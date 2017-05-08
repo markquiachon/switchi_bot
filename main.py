@@ -47,7 +47,7 @@ def event_handler(event_type, event_json):
 
 @route('/test')
 def get_user_id():
-  test_client = SlackClient("xoxb-176165584416-sn3eHS3cUb2l1gNSPh3CoHGy")
+  test_client = SlackClient("xoxb-176165584416-mGMi8IxiwhFUHBwP7HvJ7KdV")
   api_call = test_client.api_call("users.list")
   id = "None"
   if api_call.get('ok'):
