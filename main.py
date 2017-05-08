@@ -1,4 +1,6 @@
 from bottle import request, default_app, route, template 
+from slackclient import SlackClient
+
 import slack_bot
 import requests
 import os
@@ -43,6 +45,17 @@ def event_handler(event_type, event_json):
       #switchi_bot.post_channel_message(message, channel_id, user_id)
 
 
+@route('/test')
+def get_user_id():
+  test_client = SlackClient("xoxb-176165584416-sn3eHS3cUb2l1gNSPh3CoHGy")
+  api_call = test_client.api_call("users.list")
+  if api_call.get('ok'):
+    # retrieve all users so we can find our bot 
+    users = api_call.get('members')
+    for user in users:
+      if 'name' in user and user.get('name') == BOT_NAME:
+        return user.get('id')
+  
 @route('/auth_app')
 def auth_app():
   code = request.GET.get("code")
