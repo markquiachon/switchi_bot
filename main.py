@@ -38,6 +38,7 @@ def event_handler(event_type, event_json):
     channel_id = event_json["event"].get("channel")
     command = event_json["event"].get("text").split(':')[0]
     user_name = switchi_bot.get_user_name(user_id)
+    switchi_bot.has_replied = False
 
     if command == "help":
       get_url = SPREADSHEET_URL + "?cmd=%s&state=%s" % (command, "help")
