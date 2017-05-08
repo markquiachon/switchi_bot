@@ -1,5 +1,6 @@
 from bottle import request, default_app, route, template 
 from slackclient import SlackClient
+from json import dumps
 
 import slack_bot
 import requests
@@ -18,10 +19,7 @@ switchi_bot = slack_bot.SlackBot(BOT_NAME,
 
 
 def verify_challenge(event_json):
-  from json import dumps
-
   token = {"challenge":event_json["challenge"]}
-
   return dumps(token)
 
 
@@ -49,7 +47,7 @@ def event_handler(event_type, event_json):
 #        bot_response = bot_response + "%s -> %s\n" % (cmd, desc)
 #      bot_response = bot_response + "```"
 
-      switchi_bot.post_channel_message(response, channel_id, user_id)
+      switchi_bot.post_channel_message(dumps(response), channel_id, user_id)
 
 #    status_code = log_spreadsheet(spreadsheet_url, message) 
 
