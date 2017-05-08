@@ -35,7 +35,8 @@ def event_handler(event_type, event_json):
   if event_type == "message": 
     user_id = event_json["event"].get("user")
     channel_id = event_json["event"].get("channel")
-    command, message = event_json["event"].get("text").split(':')
+    command = event_json["event"].get("text").split(':')[0]
+    message = event_json["event"].get("text").split(':')[1]
 
     spreadsheet_url = os.environ.get("SPREADSHEET_URL")
     if command == "help":
