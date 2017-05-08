@@ -35,8 +35,8 @@ def event_handler(event_type, event_json):
   if event_type == "message": 
     user_id = event_json["event"].get("user")
     channel_id = event_json["event"].get("channel")
-    #command = event_json["event"].get("text").split(':')[0]
-    #message = event_json["event"].get("text").split(':')[1]
+#    command = event_json["event"].get("text").split(':')[0]
+#    message = event_json["event"].get("text").split(':')[1]
     command = event_json["event"].get("text")
 
     spreadsheet_url = os.environ.get("SPREADSHEET_URL")
@@ -51,10 +51,10 @@ def event_handler(event_type, event_json):
 
       switchi_bot.post_channel_message(bot_response, channel_id, user_id)
 
-    #status_code = log_spreadsheet(spreadsheet_url, message) 
+#    status_code = log_spreadsheet(spreadsheet_url, message) 
 
-    #if status_code == requests.codes.ok:
-      #switchi_bot.post_channel_message(message, channel_id, user_id)
+#    if status_code == requests.codes.ok:
+#      switchi_bot.post_channel_message(message, channel_id, user_id)
 
 
 @route('/auth_app')
