@@ -20,6 +20,7 @@ switchi_bot = slack_bot.SlackBot(BOT_NAME,
                            CLIENT_SECRET,
                            VERIFICATION_TOKEN)
 
+last_state = ""
 
 def verify_challenge(event_json):
   token = {"challenge":event_json["challenge"]}
@@ -36,11 +37,11 @@ def event_handler(event_type, event_json):
   if event_type == "message": 
     user_id = event_json["event"].get("user")
     channel_id = event_json["event"].get("channel")
-    command = event_json["event"].get("text").split(':')[0]
+    command = event_json["event"].get("text").split(':')[0].strip()
     user_name = switchi_bot.get_user_name(user_id)
-    switchi_bot.has_replied = False
-    print >> sys.stderr, "Message has been received"
+
     if command == "help":
+      last_state = ""
       get_url = SPREADSHEET_URL + "?cmd=%s&state=%s" % (command, "help")
       response = requests.get(get_url)
       response = response.json() 
@@ -51,22 +52,26 @@ def event_handler(event_type, event_json):
       bot_response = bot_response + "```"
 
       switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+
     elif command == "log":
       bot_response = "@" + user_name + "\nMessage logged. Thanks! :smile:"
       message = event_json["event"].get("text").split(":")[1]
       message = message.strip()
+      last_state = message
       status_code = log_spreadsheet(SPREADSHEET_URL, message)
       
       if status_code == requests.codes.ok:
         switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+
     elif command == "ask":
       input = event_json["event"].get("text").split(":")[1]
-      client = wolframalpha.Client(WOLFRAM_APP_ID) 
-      response = client.query(input)
-      answer = next(response.results).text
-      bot_response = "@%s\n```The answer is: \n%s```" % (user_name, answer)
-      
-      switchi_bot.post_channel_message(bot_response, channel_id, user_id) 
+      if input != last_state:
+        client = wolframalpha.Client(WOLFRAM_APP_ID) 
+        response = client.query(input)
+        answer = next(response.results).text
+        bot_response = "@%s\n```The answer is: \n%s```" % (user_name, answer)
+        
+        switchi_bot.post_channel_message(bot_response, channel_id, user_id) 
 
 
 @route('/auth_app')
