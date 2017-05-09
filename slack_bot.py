@@ -14,6 +14,7 @@ class SlackBot(object):
     self.client = SlackClient("")
 
     self.verification = verification
+    self.last_message_received = ""
 
   def authenticate(self, code):
     auth_response = self.client.api_call(

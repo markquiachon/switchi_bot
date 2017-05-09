@@ -20,7 +20,6 @@ switchi_bot = slack_bot.SlackBot(BOT_NAME,
                            CLIENT_SECRET,
                            VERIFICATION_TOKEN)
 
-last_state = ""
 
 def verify_challenge(event_json):
   token = {"challenge":event_json["challenge"]}
@@ -42,6 +41,7 @@ def event_handler(event_type, event_json):
 
     if command == "help":
       last_state = ""
+      switchi_bot.last_message_received = ""
       get_url = SPREADSHEET_URL + "?cmd=%s&state=%s" % (command, "help")
       response = requests.get(get_url)
       response = response.json() 
@@ -57,7 +57,7 @@ def event_handler(event_type, event_json):
       bot_response = "@" + user_name + "\nMessage logged. Thanks! :smile:"
       message = event_json["event"].get("text").split(":")[1]
       message = message.strip()
-      last_state = message
+      switchi_bot.last_message_received = message
       status_code = log_spreadsheet(SPREADSHEET_URL, message)
       
       if status_code == requests.codes.ok:
@@ -65,13 +65,14 @@ def event_handler(event_type, event_json):
 
     elif command == "ask":
       input = event_json["event"].get("text").split(":")[1]
-      if input != last_state:
+      if input != switchi_bot.last_message_received:
         client = wolframalpha.Client(WOLFRAM_APP_ID) 
         response = client.query(input)
         answer = next(response.results).text
         bot_response = "@%s\n```The answer is: \n%s```" % (user_name, answer)
         
         switchi_bot.post_channel_message(bot_response, channel_id, user_id) 
+        switchi_bot.last_message_received = input
 
 
 @route('/auth_app')
