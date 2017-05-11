@@ -50,7 +50,7 @@ def event_handler(event_type, event_json):
         bot_response = bot_response + "%s -> %s\n" % (cmd, response[cmd])
       bot_response = bot_response + "```"
 
-      switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+      switchi_bot.post_channel_message(bot_response, channel_id)
 
     elif command == "log":
       switchi_bot.last_question = ""
@@ -60,7 +60,7 @@ def event_handler(event_type, event_json):
       status_code = log_spreadsheet(SPREADSHEET_URL, message)
       
       if status_code == requests.codes.ok:
-        switchi_bot.post_channel_message(bot_response, channel_id, user_id)
+        switchi_bot.post_channel_message(bot_response, channel_id)
 
     elif command == "ask":
       input = event_json["event"].get("text").split(":")[1].strip()
@@ -70,7 +70,7 @@ def event_handler(event_type, event_json):
         answer = next(response.results).text
         bot_response = "@%s\n```The answer is: \n%s```" % (user_name, answer)
         
-        switchi_bot.post_channel_message(bot_response, channel_id, user_id) 
+        switchi_bot.post_channel_message(bot_response, channel_id) 
 	switchi_bot.last_question = input 
 
 
