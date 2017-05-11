@@ -40,7 +40,7 @@ def event_handler(event_type, event_json):
     user_name = switchi_bot.get_user_name(user_id)
 
     if command == "help":
-      switchi_bot.last_message_received = ""
+      switchi_bot.last_question = ""
       get_url = SPREADSHEET_URL + "?cmd=%s&state=%s" % (command, "help")
       response = requests.get(get_url)
       response = response.json() 
@@ -53,25 +53,25 @@ def event_handler(event_type, event_json):
       switchi_bot.post_channel_message(bot_response, channel_id, user_id)
 
     elif command == "log":
+      switchi_bot.last_question = ""
       bot_response = "@" + user_name + "\nMessage logged. Thanks! :smile:"
       message = event_json["event"].get("text").split(":")[1]
       message = message.strip()
-      switchi_bot.last_message_received = message
       status_code = log_spreadsheet(SPREADSHEET_URL, message)
       
       if status_code == requests.codes.ok:
         switchi_bot.post_channel_message(bot_response, channel_id, user_id)
 
     elif command == "ask":
-      input = event_json["event"].get("text").split(":")[1]
-      if user_name != switchi_bot.last_user_name:
-        switchi_bot.last_user_name = user_name
+      input = event_json["event"].get("text").split(":")[1].strip()
+      if input != switchi_bot.last_question:
         client = wolframalpha.Client(WOLFRAM_APP_ID) 
         response = client.query(input)
         answer = next(response.results).text
         bot_response = "@%s\n```The answer is: \n%s```" % (user_name, answer)
         
         switchi_bot.post_channel_message(bot_response, channel_id, user_id) 
+	switchi_bot.last_question = input 
 
 
 @route('/auth_app')
